@@ -2,8 +2,10 @@ package pl.shop.payments;
 
 import lombok.Setter;
 import lombok.extern.java.Log;
+import org.springframework.stereotype.Component;
 
 @Log
+//@Component
 public class IncrementalPaymentIdGenerator implements PaymentIdGenerator {
 
     private static final String ID_FORMAT = "%010d";

@@ -2,10 +2,12 @@ package pl.shop.payments;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.stereotype.Component;
 
 import static pl.shop.Application.ANSI_BLUE;
 import static pl.shop.Application.ANSI_RESET;
 
+@Component
 @Log
 @RequiredArgsConstructor
 public class LoggingPaymentService implements PaymentService {
