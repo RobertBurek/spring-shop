@@ -3,8 +3,8 @@ package pl.shop;
 import lombok.extern.java.Log;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import pl.shop.payments.LocalMoney;
-import pl.shop.payments.LoggingPaymentService;
 import pl.shop.payments.PaymentRequest;
+import pl.shop.payments.PaymentService;
 
 
 @Log
@@ -21,7 +21,7 @@ public class Application {
     public static void main(String[] args) {
 
         try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BASE_PACKAGE)) {
-            var paymentService = applicationContext.getBean(LoggingPaymentService.class);
+            var paymentService = applicationContext.getBean(PaymentService.class);
             var paymentRequest = PaymentRequest.builder()
                     .money((LocalMoney.of(1_000)))
                     .build();
