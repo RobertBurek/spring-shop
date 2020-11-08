@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FakePaymentServiceTest {
@@ -26,7 +27,7 @@ public class FakePaymentServiceTest {
 
     @BeforeEach
     void setUp() {
-        Mockito.when(paymentIdGenerator.getNext()).thenReturn(PAYMENT_ID);
+        when(paymentIdGenerator.getNext()).thenReturn(PAYMENT_ID);
         FakePaymentService fakePaymentService = new FakePaymentService(paymentIdGenerator);
         payment = fakePaymentService.process(PAYMENT_REQUEST);
     }
@@ -35,6 +36,12 @@ public class FakePaymentServiceTest {
     @Test
     void shouldAssignGeneratedIdToCreatedPayment(){
         assertEquals(PAYMENT_ID,payment.getId());
+    }
+
+    @DisplayName("Should assign money from payment request to sreated payment")
+    @Test
+    void shouldAssignMoneyFromPaymentRequestToCreatedPayment(){
+        assertEquals(MONEY,payment.getMoney());
     }
 
     @Test
