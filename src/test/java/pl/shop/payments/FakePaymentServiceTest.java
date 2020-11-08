@@ -2,6 +2,7 @@ package pl.shop.payments;
 
 import org.javamoney.moneta.FastMoney;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -28,6 +29,12 @@ public class FakePaymentServiceTest {
         Mockito.when(paymentIdGenerator.getNext()).thenReturn(PAYMENT_ID);
         FakePaymentService fakePaymentService = new FakePaymentService(paymentIdGenerator);
         payment = fakePaymentService.process(PAYMENT_REQUEST);
+    }
+
+    @DisplayName("Should assign generated id to created payment")
+    @Test
+    void shouldAssignGeneratedIdToCreatedPayment(){
+        assertEquals(PAYMENT_ID,payment.getId());
     }
 
     @Test
