@@ -44,7 +44,10 @@ public class FakePaymentServiceTest {
         assertEquals(MONEY,payment.getMoney());
     }
 
+    @DisplayName("Should assign timestamp to created payment")
     @Test
-    void process() {
+    void shouldAssignTimestampToCreatedPayment(){
+        assertNotNull(payment.getTimestamp());
     }
+
 }
