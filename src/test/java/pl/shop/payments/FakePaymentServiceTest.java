@@ -50,4 +50,10 @@ public class FakePaymentServiceTest {
         assertNotNull(payment.getTimestamp());
     }
 
+    @DisplayName("Should assign STARTED status to created payment")
+    @Test
+    void shouldAssignStartedStatusToCreatedPayment(){
+        assertEquals(payment.getStatus(),PaymentStatus.STARTED);
+    }
+
 }
