@@ -6,11 +6,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class FakePaymentServiceTest {
@@ -23,37 +25,40 @@ public class FakePaymentServiceTest {
 
     @Mock
     private PaymentIdGenerator paymentIdGenerator;
+    @Mock
+    private PaymentRepository paymentRepository;
     private Payment payment;
 
     @BeforeEach
     void setUp() {
         when(paymentIdGenerator.getNext()).thenReturn(PAYMENT_ID);
-        FakePaymentService fakePaymentService = new FakePaymentService(paymentIdGenerator);
+        when(paymentRepository.save(any(Payment.class))).then(returnsFirstArg());
+        FakePaymentService fakePaymentService = new FakePaymentService(paymentIdGenerator, paymentRepository);
         payment = fakePaymentService.process(PAYMENT_REQUEST);
     }
 
     @DisplayName("Should assign generated id to created payment")
     @Test
-    void shouldAssignGeneratedIdToCreatedPayment(){
-        assertEquals(PAYMENT_ID,payment.getId());
+    void shouldAssignGeneratedIdToCreatedPayment() {
+        assertEquals(PAYMENT_ID, payment.getId());
     }
 
     @DisplayName("Should assign money from payment request to sreated payment")
     @Test
-    void shouldAssignMoneyFromPaymentRequestToCreatedPayment(){
-        assertEquals(MONEY,payment.getMoney());
+    void shouldAssignMoneyFromPaymentRequestToCreatedPayment() {
+        assertEquals(MONEY, payment.getMoney());
     }
 
     @DisplayName("Should assign timestamp to created payment")
     @Test
-    void shouldAssignTimestampToCreatedPayment(){
+    void shouldAssignTimestampToCreatedPayment() {
         assertNotNull(payment.getTimestamp());
     }
 
     @DisplayName("Should assign STARTED status to created payment")
     @Test
-    void shouldAssignStartedStatusToCreatedPayment(){
-        assertEquals(payment.getStatus(),PaymentStatus.STARTED);
+    void shouldAssignStartedStatusToCreatedPayment() {
+        assertEquals(payment.getStatus(), PaymentStatus.STARTED);
     }
 
 }
