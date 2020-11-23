@@ -11,8 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FakePaymentServiceTest {
@@ -59,6 +58,12 @@ public class FakePaymentServiceTest {
     @Test
     void shouldAssignStartedStatusToCreatedPayment() {
         assertEquals(payment.getStatus(), PaymentStatus.STARTED);
+    }
+
+    @DisplayName("Should save created payment")
+    @Test
+    void shouldSaveCreatedPayment() {
+        verify(paymentRepository).save(payment);
     }
 
 }
